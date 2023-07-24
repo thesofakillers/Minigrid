@@ -1,9 +1,9 @@
-from __future__ import annotation
+from __future__ import annotations
 
 import math
 import operator
 from functools import reduce
-from typing import Any, Optional, Dict, Tuple
+from typing import Any
 
 import gymnasium as gym
 import numpy as np
@@ -56,8 +56,8 @@ class ReseedWrapper(Wrapper):
         super().__init__(env)
 
     def reset(
-        self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
-    ) -> Tuple[ObsType, Dict[str, Any]]:
+        self, *, seed: int | None = None, options: dict[str, Any] | None = None
+    ) -> tuple[ObsType, dict[str, Any]]:
         if seed is not None:
             logger.warn(
                 "A seed has been passed to `ReseedWrapper.reset` which is ignored."
@@ -686,8 +686,8 @@ class DirectionObsWrapper(ObservationWrapper):
         self.type = type
 
     def reset(
-        self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
-    ) -> Tuple[ObsType, Dict[str, Any]]:
+        self, *, seed: int | None = None, options: dict[str, Any] | None = None
+    ) -> tuple[ObsType, dict[str, Any]]:
         obs, info = self.env.reset()
 
         if not self.goal_position:
@@ -827,7 +827,7 @@ class NoDeath(Wrapper):
         (-2.0, False)
     """
 
-    def __init__(self, env, no_death_types: Tuple[str, ...], death_cost: float = -1.0):
+    def __init__(self, env, no_death_types: tuple[str, ...], death_cost: float = -1.0):
         """A wrapper to prevent death in specific cells.
 
         Args:
