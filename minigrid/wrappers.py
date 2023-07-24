@@ -1,9 +1,9 @@
-from __future__ import annotations
+from __future__ import annotation
 
 import math
 import operator
 from functools import reduce
-from typing import Any
+from typing import Any, Optional, Dict, Tuple
 
 import gymnasium as gym
 import numpy as np
@@ -56,8 +56,8 @@ class ReseedWrapper(Wrapper):
         super().__init__(env)
 
     def reset(
-        self, *, seed: int | None = None, options: dict[str, Any] | None = None
-    ) -> tuple[ObsType, dict[str, Any]]:
+        self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ) -> Tuple[ObsType, Dict[str, Any]]:
         if seed is not None:
             logger.warn(
                 "A seed has been passed to `ReseedWrapper.reset` which is ignored."
@@ -323,7 +323,7 @@ class RGBImgObsWrapper(ObservationWrapper):
         )
 
     def observation(self, obs):
-        rgb_img = self.get_frame(highlight=True, tile_size=self.tile_size)
+        rgb_img = self.get_frame(highlight=self.env.highlight, tile_size=self.tile_size)
 
         return {**obs, "image": rgb_img}
 
@@ -686,8 +686,8 @@ class DirectionObsWrapper(ObservationWrapper):
         self.type = type
 
     def reset(
-        self, *, seed: int | None = None, options: dict[str, Any] | None = None
-    ) -> tuple[ObsType, dict[str, Any]]:
+        self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ) -> Tuple[ObsType, Dict[str, Any]]:
         obs, info = self.env.reset()
 
         if not self.goal_position:
@@ -827,7 +827,7 @@ class NoDeath(Wrapper):
         (-2.0, False)
     """
 
-    def __init__(self, env, no_death_types: tuple[str, ...], death_cost: float = -1.0):
+    def __init__(self, env, no_death_types: Tuple[str, ...], death_cost: float = -1.0):
         """A wrapper to prevent death in specific cells.
 
         Args:
