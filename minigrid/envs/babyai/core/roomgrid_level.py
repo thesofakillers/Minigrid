@@ -3,6 +3,8 @@ Copied and adapted from https://github.com/mila-iqia/babyai
 """
 from __future__ import annotations
 
+from gymnasium import logger
+
 from minigrid.core.roomgrid import RoomGrid
 from minigrid.envs.babyai.core.verifier import (
     ActionInstr,
@@ -129,11 +131,11 @@ class RoomGridLevel(RoomGrid):
                 self.validate_instrs(self.instrs)
 
             except RecursionError as error:
-                print("Timeout during mission generation:", error)
+                logger.info(f"Timeout during mission generation: {error}")
                 continue
 
             except RejectSampling as error:
-                print("Sampling rejected:", error)
+                logger.info(f"Sampling rejected: {error}")
                 continue
 
             break
