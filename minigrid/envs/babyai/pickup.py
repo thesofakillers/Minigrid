@@ -270,7 +270,7 @@ class PickupDist(RoomGridLevel):
 
     def __init__(self, debug=False, **kwargs):
         self.debug = debug
-        super().__init__(num_rows=1, num_cols=1, room_size=7, **kwargs)
+        super().__init__(num_rows=1, num_cols=1, **kwargs)
 
     def gen_mission(self):
         # Add 5 random objects in the room
